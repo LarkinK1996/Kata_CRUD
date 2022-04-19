@@ -2,13 +2,15 @@ package com.company.controller;
 
 import com.company.model.User;
 import com.company.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,7 +35,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("person", userDao.get(id));
+        model.addAttribute("person", userDao.getUser(id));
         return "user";
     }
 
@@ -49,10 +51,9 @@ public class UserController {
         return "redirect:/";
     }
 
-
-    @PostMapping("/update/{id}")
-    public String set(@ModelAttribute("user") User user, @PathVariable(name = "id") int id) {
-        userDao.set(id, user);
+    @PatchMapping("/update/{id}")
+    public String updateUser(@ModelAttribute("user") User user, @PathVariable(name = "id") int id) {
+        userDao.updateUser(id, user);
         return "redirect:/";
     }
 
@@ -60,13 +61,13 @@ public class UserController {
     public ModelAndView showEditProductForm(@PathVariable(name = "id") int id) {
 
         ModelAndView modelAndView = new ModelAndView("edit");
-        User user = userDao.get(id);
+        User user = userDao.getUser(id);
 
         modelAndView.addObject("user", user);
-        return modelAndView;
+         return modelAndView;
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable(name = "id") int id) {
         userDao.delete(id);
         return "redirect:/";

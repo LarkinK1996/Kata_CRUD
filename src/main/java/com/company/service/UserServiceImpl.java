@@ -2,7 +2,6 @@ package com.company.service;
 
 import com.company.dao.UserDaoImpl;
 import com.company.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,8 +30,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public User get(int id) {
-        return userDaoImpl.get(id);
+    public User getUser(int id) {
+        return userDaoImpl.getUser(id);
     }
 
     @Override
@@ -44,8 +43,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void set(int id, User newUser) {
-        userDaoImpl.set(id, newUser);
+    public void updateUser(int id, User newUser) {
+        userDaoImpl.updateUser(id, newUser);
     }
 }
 
